@@ -1,1 +1,112 @@
-<h3>ywq</h3>ywq
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双色球选号</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            width: 100vw;
+            height:100vh;
+            margin: 0;
+            padding: 2vw 0;
+        }
+        .result,
+        .options {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .options {
+            margin-top: 20px;
+            border: 2px solid black;
+        }
+
+        .ball {
+            width: 12vw;
+            text-align: center;
+            border-radius: 50%;
+            height: 12vw;
+            line-height: 12vw;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .focus {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="result">
+            <div class="ball red">…</div>
+            <div class="ball red">…</div>
+            <div class="ball red">…</div>
+            <div class="ball red">…</div>
+            <div class="ball red">…</div>
+            <div class="ball red">…</div>
+            <div class="ball blue">…</div>
+        </div>
+        <div class="options hide"></div>
+    </div>
+    <script>
+        var balls = document.querySelectorAll('.ball'),
+            options = document.querySelector('.options');
+        balls.forEach(ball => {
+            ball.addEventListener('click', function (e) {
+                var target = e.target,
+                    className = target.className;
+                balls.forEach(ball => {
+                    ball.classList.remove('focus');
+                });
+                target.classList.add('focus');
+                options.innerHTML = '';
+                if (className.indexOf('red') >= 0) {
+                    for (let index = 1; index <= 33; index++) {
+                        var options_ball = document.createElement('div');
+                        options_ball.className = 'ball red';
+                        options_ball.innerText = index;
+                        options.appendChild(options_ball);
+                    }
+                }
+                if (className.indexOf('blue') >= 0) {
+                    for (let index = 1; index <= 16; index++) {
+                        var options_ball = document.createElement('div');
+                        options_ball.className = 'ball blue';
+                        options_ball.innerText = index;
+                        options.appendChild(options_ball);
+                    }
+                }
+                options.classList.remove('hide');
+            })
+        });
+        options.addEventListener('click', function (e) {
+            var target = e.target,
+                el_focus = document.querySelector('.ball.focus');
+            if (target.className.indexOf('ball') >= 0) {
+                el_focus.innerText = target.innerText;
+                options.classList.add('hide');
+            }
+        });
+    </script>
+</body>
+
+</html>
