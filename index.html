@@ -7,20 +7,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>双色球选号</title>
     <style>
-        *{
+        * {
             box-sizing: border-box;
         }
-        body{
+
+        body {
             width: 100vw;
-            height:100vh;
+            height: 100vh;
             margin: 0;
-            padding: 2vw 0;
+            padding: 0;
         }
+
         .result,
-        .options {
+        .options,
+        .keep {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+            padding: 2vw 0;
+        }
+
+        .keep {
+            height: 100vh;
         }
 
         .options {
@@ -29,11 +37,11 @@
         }
 
         .ball {
-            width: 12vw;
+            width: 13vw;
             text-align: center;
             border-radius: 50%;
-            height: 12vw;
-            line-height: 12vw;
+            height: 13vw;
+            line-height: 13vw;
             color: white;
         }
 
@@ -52,11 +60,23 @@
         .focus {
             border: 2px solid black;
         }
+
+        .footer {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            width: 100vw;
+        }
+
+        .footer button {
+            width: 50vw;
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="wrap">
+    <div class="select">
         <div class="result">
             <div class="ball red">…</div>
             <div class="ball red">…</div>
@@ -67,10 +87,35 @@
             <div class="ball blue">…</div>
         </div>
         <div class="options hide"></div>
+        <div class="footer">
+            <button class='save'>保存</button>
+            <button class='look'>查看</button>
+        </div>
     </div>
+    <div class="keep hide"></div>
+    <script>
+        function getResult(params) {
+            var redult_ball = document.querySelectorAll('.result .ball'),
+                result = [];
+            for (let index = 0; index < redult_ball.length; index++) {
+                var ball = redult_ball[index],
+                    num = ball.innerText;
+                if (num == '…') {
+                    result = null;
+                    break;
+                }
+                result.push(num);
+            }
+            return result;
+        }
+    </script>
     <script>
         var balls = document.querySelectorAll('.ball'),
-            options = document.querySelector('.options');
+            options = document.querySelector('.options'),
+            save = document.querySelector('.save'),
+            look = document.querySelector('.look'),
+            select = document.querySelector('.select'),
+            keep = document.querySelector('.keep');
         balls.forEach(ball => {
             ball.addEventListener('click', function (e) {
                 var target = e.target,
@@ -106,6 +151,49 @@
                 el_focus.innerText = target.innerText;
                 options.classList.add('hide');
             }
+        });
+        save.addEventListener('click', function (e) {
+            var line = getResult(),
+                lines = localStorage.lines;
+            if (!line) {
+                alert('有未选择的小球');
+                return;
+            }
+            if (lines) {
+                lines = JSON.parse(lines);
+            } else {
+                lines = [];
+            }
+            lines.push(line);
+            localStorage.lines = JSON.stringify(lines);
+            alert('保存成功');
+        });
+        look.addEventListener('click', function (e) {
+            keep.innerText='';
+            var lines = localStorage.lines;
+            if (lines) {
+                lines = JSON.parse(lines);
+            } else {
+                lines = [];
+            }
+            if (lines.length == 0) {
+                alert('暂无记录');
+                return;
+            }
+            select.classList.add('hide');
+            keep.classList.remove('hide');
+            lines.forEach(line => {
+                line.forEach((num, index) => {
+                    var ball = document.createElement('div');
+                    ball.className = 'ball ' + (index == 6 ? 'blue' : 'red');
+                    ball.innerText = num;
+                    keep.appendChild(ball);
+                });
+            });
+        });
+        keep.addEventListener('click', function (e) {
+            select.classList.remove('hide');
+            keep.classList.add('hide');
         });
     </script>
 </body>
