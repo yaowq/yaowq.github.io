@@ -69,7 +69,7 @@
         }
 
         .footer button {
-            width: 50vw;
+            flex: 1;
             padding: 10px;
         }
     </style>
@@ -90,6 +90,7 @@
         <div class="footer">
             <button class='save'>保存</button>
             <button class='look'>查看</button>
+            <button class='openApp'>app内查看</button>
         </div>
     </div>
     <div class="keep hide"></div>
@@ -169,7 +170,7 @@
             alert('保存成功');
         });
         look.addEventListener('click', function (e) {
-            keep.innerText='';
+            keep.innerText = '';
             var lines = localStorage.lines;
             if (lines) {
                 lines = JSON.parse(lines);
@@ -194,6 +195,68 @@
         keep.addEventListener('click', function (e) {
             select.classList.remove('hide');
             keep.classList.add('hide');
+        });
+    </script>
+    <script>
+        /**
+        * 判断浏览器是否为头部APP
+        */
+        function isBlackApp() {
+            var u = navigator.userAgent.toLowerCase();
+            return /micromessenger/i.test(u) || u.indexOf("weibo") > -1 || u.indexOf("qq") > -1 || u.indexOf('mqqbrowser') > -1;
+        }
+
+        function openTuer() {
+            if (isBlackApp()) {
+                // 头部APP让网页显示提示在浏览器中打开
+                showTips();
+            } else {
+                // 不是头部APP就直接打开，这里大家开始可以不用参数，后面写好再来添加即可
+                openApp(0, 0);
+            }
+        }
+
+        function showTips(){
+            alert('请在浏览器中打开');
+        }
+
+
+        function openApp(which, arg) {
+            jumpApp("weixin://which=" + which + "&arg=" + arg);
+            noApp();
+        }
+
+        function jumpApp(t) {
+            try {
+                var e = navigator.userAgent.toLowerCase(),
+                    n = e.match(/cpu iphone os (.*?) like mac os/);
+                if (((n = null !== n ? n[1].replace(/_/g, ".") : 0), parseInt(n) >= 9)) {
+                    window.location.href = t;
+                } else {
+                    var r = document.createElement("iframe");
+                    (r.src = t), (r.style.display = "none"), document.body.appendChild(r);
+                }
+            } catch (e) {
+                window.location.href = t;
+            }
+        }
+
+        var timer = null;
+        function noApp() {
+            var t = Date.now(),
+                r = "http://www.tuerapp.com";
+            timer = setTimeout(function () {
+                return Date.now() - t > 2200
+                    ? (clearTimeout(timer), !1)
+                    : !document.webkitHidden && !document.hidden && void (location.href = r);
+            }, 2000);
+        }
+
+    </script>
+    <script>
+        openApp = document.querySelector('.openApp');
+        openApp.addEventListener('click', function (e) {
+           openApp(0,0);
         });
     </script>
 </body>
