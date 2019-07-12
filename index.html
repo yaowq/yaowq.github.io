@@ -90,7 +90,7 @@
         <div class="footer">
             <button class='save'>保存</button>
             <button class='look'>查看</button>
-            <button class='openApp'>app内查看</button>
+            <button class='open_app'>app内查看</button>
         </div>
     </div>
     <div class="keep hide"></div>
@@ -244,7 +244,7 @@
         var timer = null;
         function noApp() {
             var t = Date.now(),
-                r = "http://www.tuerapp.com";
+                r = "./downloadApp.html";
             timer = setTimeout(function () {
                 return Date.now() - t > 2200
                     ? (clearTimeout(timer), !1)
@@ -254,8 +254,8 @@
 
     </script>
     <script>
-        openApp = document.querySelector('.openApp');
-        openApp.addEventListener('click', function (e) {
+        var open_app = document.querySelector('.open_app');
+        open_app.addEventListener('click', function (e) {
            openApp(0,0);
         });
     </script>
