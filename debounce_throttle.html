@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>debounce_throttle Demo</title>
+    <script>
+        //防抖函数
+        var debounce=function(func,delay){
+            var st;
+            return function(){
+                var ctx=this,args=arguments;
+                clearTimeout(st);
+                st=setTimeout(function() {
+                    func.apply(ctx,args);
+                },delay);
+            }
+        }
+        //节流函数
+        var throttle=function(func,delay){
+            var st,waiting;
+            return function(){
+                var ctx=this,args=arguments;
+                if(waiting){
+                    return;
+                }
+                waiting=true;
+                setTimeout(function(){
+                    func.apply(ctx,args);
+                    waiting=false;
+                },delay);
+            }
+        }
+    </script>
+    <script>
+        (function(){
+            var count=0;
+            var click_handle=function(e){
+                document.querySelector(".add").innerText="add"+count++;
+            }
+            var click_handle_debounce=debounce(click_handle,1000);
+            document.addEventListener("DOMContentLoaded",function(){
+                document.querySelector(".add").addEventListener("click",function(){
+                    click_handle_debounce();
+                })
+            })
+        })();
+        (function(){
+            var count=0;
+            var click_handle=function(e){
+                document.querySelector(".add1").innerText="add"+count++;
+            }
+            var click_handle_throttle=throttle(click_handle,1000);
+            document.addEventListener("DOMContentLoaded",function(){
+                document.querySelector(".add1").addEventListener("click",function(){
+                    click_handle_throttle();
+                })
+            })
+        })()
+    </script>
+</head>
+<body>
+    <h3>
+        debounce Demo
+    </h3>
+    <h4>
+        core: Do not perform the action until the user stops operating for a period of time.<br/>
+        核心：直到用户停止操作一段时间后才开始执行原触发逻辑
+    </h4>
+    <button class="add">add</button>
+    <h3>
+        throttle Demo
+    </h3>
+    <h4>
+        core: Even if the user frequently operates, the original trigger logic will be executed in order at regular intervals.<br/>
+        核心：即使用户频繁操作，也会按照规定的时间间隔有序执行原触发逻辑
+    </h4>
+    <button class="add1">add</button>
+</body>
+</html>

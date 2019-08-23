@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>variable_promotion</title>
+    <script>
+        // first group
+        ;(function () {
+            var a = 1;
+            function test() {
+                console.log(a);
+                var a = 1;
+            }
+            test();
+        })()
+        ;(function () {
+            function test() {
+                var a;
+                console.log(a);//此时由于a并咩有被赋值，所以也就是undefined
+                a = 1;
+            }
+        })()
+        // second group
+        ;(function () {
+            var b = 2;
+            function test2() {
+                window.b = 3;
+                console.log(b);//值为3
+            }
+            test2();
+        })()
+        // third group
+        ;(function () {
+            c = 5;
+            function test3() {
+                window.c = 3;
+                console.log(c);
+                var c;
+                console.log(window.c);
+            }
+            test3();
+        })()
+        ;(function () {
+            c = 5;//声明一个全局变量c 
+            function test3() {
+                var c;//变量声明提升，声明一个局部变量
+                window.c = 3;//改变全局变量c的值
+                console.log(c);//由于此时的c是一个局部变量c，并且没有被赋值 c就是undefined    
+                console.log(window.c);//此时的c就是一个全局变量c，也就是值为3
+            }
+            test3();
+        })()
+    </script>
+</head>
+
+<body>
+    <div>
+        <h3>
+            <strong>基础知识&nbsp;</strong>
+        </h3>
+        <p>
+            <strong>在这个课题开始之前我们先做一些基础知识的讲解</strong>
+        </p>
+        <p>
+            <strong>1、在顶级的区域内声明的变量为 window级别的变量。 也就是说var a=100 等价于 window.a=100;</strong>
+        </p>
+        <p>
+            <strong>2、局部的重新声明变量没有意义。var a=100;var a;后面的将没有意义。</strong>
+        </p>
+        <p>
+            <strong>3、在有参数函数的定义中 function abc(p1){} abc(1),在函数执行中，先构建，在执行，会有两个步骤，所以说当函数执行之前构建过程中，将临时生成代码 var p1=1;将来一切不赋值的声明将变得没有意义。</strong>
+        </p>
+        <p>
+            <strong>var p1;//没有意义</strong>
+        </p>
+        <p>
+            <strong>var p1=2;//有意义。</strong>
+        </p>
+        <p>&nbsp;</p>
+        <h3>
+            <strong>开始进入正题</strong>
+        </h3>
+        <p>
+            <strong>全局作用域和局部作用域</strong>
+        </p>
+        <p>全局作用域：整个JS执行环境</p>
+        <p>局部作用域：通过创建一个函数就开辟出了一个局部作用域</p>
+        <p>&nbsp;</p>
+        <p>
+            <strong>全局变量和&nbsp;局部变量</strong>
+        </p>
+        <p>全局变量：在全局作用域都可以访问的变量</p>
+        <p>局部变量：只能在当前局部作用域访问的</p>
+        <p>&nbsp;</p>
+        <p>
+            <strong>变量声明提升：</strong>
+        </p>
+        <p>如果变量声明在函数里面，则将变量声明提升到函数的开头</p>
+        <p>如果变量声明是一个全局变量，则将变量声明提升到全局作用域的开头</p>
+        <p>&nbsp;</p>
+        <p>
+            <strong>变量运行（搜索）机制：</strong>
+        </p>
+        <p>首先看，有没有局部作用域</p>
+        <p>如果有，查找是不是这个局部作用域定义的变量</p>
+        <p>如果不是，寻找上一级作用域，直到找到全局作用域</p>
+        <p>如果全局作用域也找不到这个变量，这个变量就是未定义的 undefined</p>
+        <p>&nbsp;</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>valid</title>
+    <script>
+
+    </script>
+    <script>
+        // let arr = [
+        //     {
+        //         name: "寄付现结",
+        //         value: 1
+        //     },
+        //     {
+        //         name: "到付",
+        //         value: 2
+        //     },
+        //     {
+        //         name: "寄付月结",
+        //         value: 3
+        //     }
+        // ];
+        // /name":"寄付现结","value":([^}]*)}/.test(JSON.stringify(arr))
+        // RegExp.$1
+
+        // var l={a:1,b:2,c:3};
+
+        // var {a,b}=l;
+
+        // var y={a,b}
+
+        // console.log(y);
+
+
+
+        var dataBus = {
+            nameSpace: 'dataBus',
+            setData(key, value) {
+                var nameSpaceData = sessionStorage[this.nameSpace];
+                if (!nameSpaceData) {
+                    sessionStorage[this.nameSpace] = "{}";
+                }
+                var data = JSON.parse(nameSpaceData);
+                data[key] = value;
+                sessionStorage[this.nameSpace] = JSON.stringify(data);
+            },
+            getData(key) {
+                var nameSpaceData = sessionStorage[this.nameSpace];
+                if (nameSpaceData && JSON.parse(nameSpaceData)[key]) {
+                    var data = JSON.parse(nameSpaceData);
+                    return data[key];
+                }
+            },
+            removeData(key) {
+                var nameSpaceData = sessionStorage[this.nameSpace];
+                if (nameSpaceData && JSON.parse(nameSpaceData)[key]) {
+                    var data = JSON.parse(nameSpaceData);
+                    delete data[key];
+                    sessionStorage[this.nameSpace] = JSON.stringify(data);
+                }
+            },
+        }
+
+        dataBus.setData("husband", { name: "ywq" });
+        console.log(dataBus.getData("husband"));
+        dataBus.removeData("husband");
+
+
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

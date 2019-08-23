@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>call_apply_bind_callee_caller Demo</title>
+    <script>
+        var family={0:'ywq',1:'lyx',2:'ysr',length:2};
+        console.log("json字符串格式输出\n\n",JSON.stringify(family,null,4));
+
+        //call
+        var couple_call=Array.prototype.slice.call(family,0,2);
+        console.log("family对象借用数组slice方法-call",couple_call,"\n\n");
+
+        //apply 
+        var couple_apply=Array.prototype.slice.apply(family,[0,2]);
+        console.log("family对象借用数组slice方法-apply",couple_apply,"\n\n");
+
+        //bind
+        var couple_bind=Array.prototype.slice.bind(family)(0,2);
+        console.log("family对象借用数组slice方法-bind",couple_bind,"\n\n");
+
+        //caller  callee
+        var eat=function(food){
+            var caller=eat.caller,callee=arguments.callee;
+            console.log(`I am eat ${food}!\n\n谁在调用我\n\n${caller}\n\n谁在被调用\n\n${callee}`);
+        }
+        var main=function(){
+            eat("milk")
+        }
+        main();
+    </script>
+</head>
+<body>
+    <h3>
+        call_apply_bind_callee_caller Demo
+    </h3>
+    <h4>
+        core: As we all know, the method belongs to the class, only the instance of the class can be called, but sometimes there is such a need, b object has a method, as long as the condition can be called, the a object just meets the condition, so let us see This example<br/>
+        核心：众所周知，方法是属于类的，只有该类的实例才可以调用，但有时候恰恰有这种需求，b对象有一个方法，只要满足条件就可以调用，a对象恰好满足条件，所以让我们来看本例吧
+    </h4>
+</body>
+</html>

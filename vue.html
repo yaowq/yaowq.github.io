@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>valid</title>
+    <script>
+        var Vue = function (options) {
+            var me=this, root = document.querySelector("#app"), data=me._data = options.data;
+            Object.keys(data).forEach(function (key) {
+                me._proxy(key);
+            });
+        };
+        Vue.prototype = {
+            _proxy: function (key) {
+                var me = this;
+                Object.defineProperty(me, key, {
+                    configurable: false,
+                    enumerable: true,
+                    get: function proxyGetter() {
+                        return me._data[key];
+                    },
+                    set: function proxySetter(newVal) {
+                        me._data[key] = newVal;
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <label v-text="label"></label>
+        <input type="text" v-bind:value="name">
+    </div>
+    <script>
+    </script>
+</body>
+
+</html>

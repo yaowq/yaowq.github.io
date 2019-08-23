@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>valid</title>
+    <script>
+        // var a=1; 
+        // console.log(this);
+        // function af(){
+        //     console.log(a);
+        // }
+        // af();
+        var A = function () {
+            console.log(this);
+            var b = 1;
+            this.c = 2;
+        }
+        A();
+        A.prototype.x=function(m=1,n=0){ console.log(this.c) };
+        // A.prototype = { x: function (m = 1, n = 0) { console.log(this.c) } }
+        // A.prototype.constructor=function(w){
+        //     this.c=3;
+        // }
+        var a = new A(2);
+        a.x();
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

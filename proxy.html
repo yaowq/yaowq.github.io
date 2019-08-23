@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>valid</title>
+    <script>
+        var obj = {
+            name: 'ywq',
+            age: 30,
+            children: {
+                name: 'ysr',
+                age: 2
+            }
+        }
+
+        var obj_proxy = new Proxy(obj, {
+            get: function (target, key, proxy) {
+                console.log(arguments)
+                if (key in target)
+                    return target[key];
+                return undefined;
+            },
+            set: function (target, key, value, proxy) {
+                console.log(arguments)
+                if (key in target)
+                    console.log(target[key]);
+                target[key]=value;
+            }
+        })
+
+        obj_proxy.name = 'ywq1';
+        obj_proxy.children.name = 'ysr1';
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
