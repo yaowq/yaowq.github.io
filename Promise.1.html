@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>valid</title>
+    <script>
+        function Promise(executor) {
+            var self = this
+            self.status = 'pending'
+            self.data = undefined
+            self.onResolvedCallback = []
+            self.onRejectedCallback = []
+
+            function resolve(value) {
+                if (self.status === 'pending') {
+                    self.status = 'resolved';
+                    self.data = value;
+                    self.onResolvedCallback.forEach(item => item(value));
+                }
+            }
+
+            function reject(value) {
+                if (self.status === 'pending') {
+                    self.status = 'rejected';
+                    self.data = value;
+                    self.onRejectedCallback.forEach(item => item(value));
+                }
+            }
+
+            executor(resolve, reject)
+        }
+
+        Promise.prototype.then = function (onResolved, onRejected) {
+            var self = this;
+
+            onResolved = typeof onResolved === 'function' ? onResolved : function (v) { return v };
+            onRejected = typeof onRejected === 'function' ? onRejected : function (v) { throw v };
+
+            if (self.status === 'resolved') {
+                return new Promise(function (resolve, reject) {
+                    var x = onResolved(self.data);
+                    resolve(x);
+                });
+            }
+
+            if (self.status === 'rejected') {
+                return new Promise(function (resolve, reject) {
+                    var x = onRejected(self.data);
+                    resolve(x);
+                });
+            }
+
+            if (self.status === 'pending') {
+                return new Promise(function (resolve, reject) {
+                    self.onResolvedCallback.push(function (value) {
+                        try {
+                            var x = onResolved(value);
+                            if (x instanceof Promise) {
+                                x.then(resolve, reject);
+                            } else {
+                                resolve(x);
+                            }
+                        } catch (e) {
+                            reject(x);
+                        }
+                    });
+                    self.onRejectedCallback.push(function (value) {
+                        try {
+                            var x = onRejected(value);
+                            if (x instanceof Promise) {
+                                x.then(resolve, reject);
+                            } else {
+                                resolve(x);
+                            }
+                        } catch (e) {
+                            reject(e);
+                        }
+                    });
+                });
+            }
+        }
+    </script>
+    <script>
+        var getA = () => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1);
+                }, 1000);
+            });
+        };
+        var getB = (a) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1 + a);
+                }, 1000);
+            });
+        };
+        var getC = (b) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1 + b);
+                }, 1000);
+            });
+        };
+
+        getA()
+            .then((resp) => {
+                console.log(resp);
+                return getB(resp);
+            })
+            .then((resp) => {
+                console.log(resp);
+                return getB(resp);
+            })
+            .then((resp) => {
+                console.log(resp);
+            })
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

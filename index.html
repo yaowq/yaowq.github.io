@@ -1,265 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>双色球选号</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
-
-        .result,
-        .options,
-        .keep {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 2vw 0;
-        }
-
-        .keep {
-            height: 100vh;
-        }
-
-        .options {
-            margin-top: 20px;
-            border: 2px solid black;
-        }
-
-        .ball {
-            width: 13vw;
-            text-align: center;
-            border-radius: 50%;
-            height: 13vw;
-            line-height: 13vw;
-            color: white;
-        }
-
-        .red {
-            background-color: red;
-        }
-
-        .blue {
-            background-color: blue;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        .focus {
-            border: 2px solid black;
-        }
-
-        .footer {
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            width: 100vw;
-        }
-
-        .footer button {
-            flex: 1;
-            padding: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
-
 <body>
-    <div class="select">
-        <div class="result">
-            <div class="ball red">…</div>
-            <div class="ball red">…</div>
-            <div class="ball red">…</div>
-            <div class="ball red">…</div>
-            <div class="ball red">…</div>
-            <div class="ball red">…</div>
-            <div class="ball blue">…</div>
-        </div>
-        <div class="options hide"></div>
-        <a href="weixin://">跳转到微信</a>
-        <div class="footer">
-            <button class='save'>保存</button>
-            <button class='look'>查看</button>
-            <button class='open_app'>app内查看</button>
-        </div>
+    <div id="app">
+      <div name="test">{{computeA}}</div>
+    
     </div>
-    <div class="keep hide"></div>
-    <script>
-        function getResult(params) {
-            var redult_ball = document.querySelectorAll('.result .ball'),
-                result = [];
-            for (let index = 0; index < redult_ball.length; index++) {
-                var ball = redult_ball[index],
-                    num = ball.innerText;
-                if (num == '…') {
-                    result = null;
-                    break;
-                }
-                result.push(num);
-            }
-            return result;
-        }
-    </script>
-    <script>
-        var balls = document.querySelectorAll('.ball'),
-            options = document.querySelector('.options'),
-            save = document.querySelector('.save'),
-            look = document.querySelector('.look'),
-            select = document.querySelector('.select'),
-            keep = document.querySelector('.keep');
-        balls.forEach(ball => {
-            ball.addEventListener('click', function (e) {
-                var target = e.target,
-                    className = target.className;
-                balls.forEach(ball => {
-                    ball.classList.remove('focus');
-                });
-                target.classList.add('focus');
-                options.innerHTML = '';
-                if (className.indexOf('red') >= 0) {
-                    for (let index = 1; index <= 33; index++) {
-                        var options_ball = document.createElement('div');
-                        options_ball.className = 'ball red';
-                        options_ball.innerText = index;
-                        options.appendChild(options_ball);
-                    }
-                }
-                if (className.indexOf('blue') >= 0) {
-                    for (let index = 1; index <= 16; index++) {
-                        var options_ball = document.createElement('div');
-                        options_ball.className = 'ball blue';
-                        options_ball.innerText = index;
-                        options.appendChild(options_ball);
-                    }
-                }
-                options.classList.remove('hide');
-            })
-        });
-        options.addEventListener('click', function (e) {
-            var target = e.target,
-                el_focus = document.querySelector('.ball.focus');
-            if (target.className.indexOf('ball') >= 0) {
-                el_focus.innerText = target.innerText;
-                options.classList.add('hide');
-            }
-        });
-        save.addEventListener('click', function (e) {
-            var line = getResult(),
-                lines = localStorage.lines;
-            if (!line) {
-                alert('有未选择的小球');
-                return;
-            }
-            if (lines) {
-                lines = JSON.parse(lines);
-            } else {
-                lines = [];
-            }
-            lines.push(line);
-            localStorage.lines = JSON.stringify(lines);
-            alert('保存成功');
-        });
-        look.addEventListener('click', function (e) {
-            keep.innerText = '';
-            var lines = localStorage.lines;
-            if (lines) {
-                lines = JSON.parse(lines);
-            } else {
-                lines = [];
-            }
-            if (lines.length == 0) {
-                alert('暂无记录');
-                return;
-            }
-            select.classList.add('hide');
-            keep.classList.remove('hide');
-            lines.forEach(line => {
-                line.forEach((num, index) => {
-                    var ball = document.createElement('div');
-                    ball.className = 'ball ' + (index == 6 ? 'blue' : 'red');
-                    ball.innerText = num;
-                    keep.appendChild(ball);
-                });
-            });
-        });
-        keep.addEventListener('click', function (e) {
-            select.classList.remove('hide');
-            keep.classList.add('hide');
-        });
-    </script>
-    <script>
-        /**
-        * 判断浏览器是否为头部APP
-        */
-        function isBlackApp() {
-            var u = navigator.userAgent.toLowerCase();
-            return /micromessenger/i.test(u) || u.indexOf("weibo") > -1 || u.indexOf("qq") > -1 || u.indexOf('mqqbrowser') > -1;
-        }
-
-        function openTuer() {
-            if (isBlackApp()) {
-                // 头部APP让网页显示提示在浏览器中打开
-                showTips();
-            } else {
-                // 不是头部APP就直接打开，这里大家开始可以不用参数，后面写好再来添加即可
-                openApp(0, 0);
-            }
-        }
-
-        function showTips(){
-            alert('请在浏览器中打开');
-        }
-
-
-        function openApp(which, arg) {
-            jumpApp("weixin://which=" + which + "&arg=" + arg);
-            noApp();
-        }
-
-        function jumpApp(t) {
-            try {
-                var e = navigator.userAgent.toLowerCase(),
-                    n = e.match(/cpu iphone os (.*?) like mac os/);
-                if (((n = null !== n ? n[1].replace(/_/g, ".") : 0), parseInt(n) >= 9)) {
-                    window.location.href = t;
-                } else {
-                    var r = document.createElement("iframe");
-                    (r.src = t), (r.style.display = "none"), document.body.appendChild(r);
-                }
-            } catch (e) {
-                window.location.href = t;
-            }
-        }
-
-        var timer = null;
-        function noApp() {
-            var t = Date.now(),
-                r = "./downloadApp.html";
-            timer = setTimeout(function () {
-                return Date.now() - t > 2200
-                    ? (clearTimeout(timer), !1)
-                    : !document.webkitHidden && !document.hidden && void (location.href = r);
-            }, 2000);
-        }
-
-    </script>
-    <script>
-        var open_app = document.querySelector('.open_app');
-        open_app.addEventListener('click', function (e) {
-            openTuer();
-        });
-    </script>
+  
 </body>
-
+    <script src="./js/vue.js"></script>
+    <script type="text/javascript">
+      var app=new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          firstName: 111,
+          lastName: 222
+        }
+      },
+      computed: {
+        computeA: function () {
+          return this.firstName + ' ' + this.lastName
+        }
+      },
+      created(){
+        setTimeout(
+          () => {
+            this.firstName = 333;
+          },1000
+        )
+      }
+    })
+    </script>
 </html>
