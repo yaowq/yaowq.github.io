@@ -11,18 +11,79 @@
 <body>
     <script src="./js/tool.js"></script>
     <script>
-        var a = {
-            x: 'ywq',
-            y: {
-                x: 'lyx',
-                y: new Date(),
-                z: function () { alert(2) }
-            },
-            z: function () { alert(1) }
-        }
-        var b = clone(a);
+        // var a = {
+        //     x: 'ywq',
+        //     y: {
+        //         x: 'lyx',
+        //         y: new Date(),
+        //         z: function () { alert(2) }
+        //     },
+        //     z: function () { alert(1) }
+        // }
+        // var b = clone(a);
 
-        console.log(a,b,a===b,a.z===b.z);
+        // console.log(a, b, a === b, a.z === b.z);
+
+        // console.log(1);
+        // setTimeout(() => {
+        //     console.log(2);
+        // });
+        // new Promise((resolve, reject) => {
+        //     console.log(3);
+        //     setTimeout(() => {
+        //         resolve(4)
+        //     });
+        // }).then(resp => {
+        //     console.log(resp);
+        // })
+
+        // 13       24
+
+        
+        // var a = new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //                 resolve(1)
+        //         });
+        //     });
+        // var b = new Promise((resolve, reject) => {
+        //         setTimeout(() => {
+        //             resolve(1)
+        //         });
+        //     });
+        // async function c() {
+        //     var ar = await a;
+        //     var br = await b;
+        //     return ar+br;
+        // }
+        // c().then(resp => console.log(resp)).catch(err=> console.log(err))
+
+        class Animal{
+            constructor(age,weight){
+                this.age=age;
+                this.weight=weight;
+            }
+            say(){
+                console.log("I am 0 years old!");
+            }
+        }
+
+        class Cat extends Animal{
+            constructor(age,weight,food){
+                super(age,weight);
+                this.food=food
+            }
+            say(){
+                console.log(`I am ${this.age} years old!`);
+            }
+        }
+
+        var animal=new Animal();
+        animal.say();
+        var cat =new Cat(2,6,"bone")
+        cat.say();
+
+
+
     </script>
 </body>
 

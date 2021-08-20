@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>currying</title>
+    <script>
+        function curry(func) {
+            return function curried(...args) {
+                if (args.length >= func.length) { // 通过函数的length属性，来获取函数的形参个数
+                    return func.apply(this, args);
+                } else {
+                    return function (...args2) {
+                        return curried.apply(this, args.concat(args2));
+                    };
+                }
+            }
+        }
+        const add = function (a, b, c) {
+            return a + b + c;
+        };
+
+        const curried = curry(add);
+        console.log(curried(1)(2)(3));
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

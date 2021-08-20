@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对齐</title>
+    <style>
+        .father{
+            width: 500px;
+            height: 200px;
+            background-color: antiquewhite;
+        }
+        .child{
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+        }
+        .f{
+            display: flex;
+        }
+        .c{
+            margin: auto;
+        }
+        .f1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .f2{
+            position: relative;
+        }
+        .c2{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        .f3{
+            display:table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .c3{
+            display: inline-block;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <h2>一、不定宽高</h2>
+    <h3>0. flex + margin</h3>
+    <div class="father f">
+        <div class="child c"></div>
+    </div>
+    <h3>1. flex</h3>
+    <div class="father f1">
+        <div class="child"></div>
+    </div>
+    <h3>2. 绝对定位 + transform</h3>
+    <div class="father f2">
+        <div class="child c2"></div>
+    </div>
+    <h3>3. table-cell</h3>
+    <div class="father f3">
+        <div class="child c3"></div>
+    </div>
+
+</body>
+
+</html>

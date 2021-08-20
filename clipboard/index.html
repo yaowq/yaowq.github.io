@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clipboard</title>
+</head>
+
+<body>
+    <h3>js 复制粘贴</h3>
+    <ol>
+        <li>
+            <h4>图片（a. 截图后在本网页粘贴 b. 磁盘文件复制本网页粘贴 c. 网页图片复制粘贴）</h4>
+            <p>
+                <input type="button" value="粘贴" id="paste">
+            </p>
+            <p>
+                <img src="" alt="" srcset="" id="img" width="200px">
+            </p>
+            <div style="min-height: 200px;border: 1px solid blueviolet;padding: 10px;" contenteditable="true">
+
+            </div>
+
+        </li>
+    </ol>
+    <script>
+        var triggerEvent = function (element, type) { 
+            var event; 
+            if (document.createEventObject) { 
+                event = document.createEventObject(); 
+                return element.fireEvent('on' + type, event); 
+            } else { 
+                event = document.createEvent('HTMLEvents'); 
+                event.eventName = type; 
+                event.initEvent(type, true, true); 
+                return !element.dispatchEvent(event); 
+            } 
+        }
+    </script>
+    <script>
+        const clipboard = navigator.clipboard;
+        document.querySelector("#paste").addEventListener("click", e => {
+            console.log(e);
+            triggerEvent(document,'paste');
+        });
+        document.addEventListener('paste', async (e) => {
+            // e.preventDefault();
+            if(e.clipboardData){
+                const fileReader = new FileReader()
+                fileReader.readAsDataURL(e.clipboardData.files[0])
+                fileReader.onload = function () {
+                    document.querySelector("#img").src = this.result
+                }
+            }else{
+                let clipboardItems = await clipboard.read();
+                clipboardItems.forEach(clipboardItem => {
+                    clipboardItem.types.forEach(async type => {
+                        let blob = await clipboardItem.getType(type)
+                        let url = URL.createObjectURL(blob)
+                        console.log(url);
+                        document.querySelector("#img").src = url
+                    });
+                });
+            }
+            
+        });
+    </script>
+</body>
+
+</html>

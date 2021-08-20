@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择和插入</title>
+</head>
+
+<body>
+    <ol>
+        <li>
+            <h4>记录和读取</h4>
+            <p>
+                <input type="button" value="存储当前光标信息" id="save">
+                <input type="button" value="设置当前光标信息" id="set">
+            </p>
+            <div id="content" style="min-height: 200px;border: 1px solid blueviolet;padding: 10px;" contenteditable="true">
+                天苍苍野茫茫，风吹草低见牛羊
+            </div>
+
+        </li>
+    </ol>
+    <script>
+        console.log(window.getSelection());
+        let selection;
+        content.addEventListener("mousedown", e => {
+            selection=window.getSelection()
+            
+            console.log(selection);
+        });
+    </script>
+</body>
+
+</html>

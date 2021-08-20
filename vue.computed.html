@@ -6,7 +6,10 @@
     <body>
     <div id="app">
       <div name="test">{{computeA}}</div>
-    
+      <div name="test">{{arr[0]}}</div>
+      <div name="test">{{arr[1].name}}</div>
+      <!-- <div name="test">{{love}}</div> -->
+      <button @click="make">make</button>
     </div>
     </body>
     <script src="./js/vue.js"></script>
@@ -16,7 +19,9 @@
       data: function () {
         return {
           firstName: 111,
-          lastName: 222
+          lastName: 222,
+          arr:[1,{name:'lx'},],
+          love:'rq'
         }
       },
       computed: {
@@ -27,9 +32,21 @@
       created(){
         setTimeout(
           () => {
-            this.firstName = 333;
-          },1000
+            this.arr[0] = 'ywq';
+            this.arr[1] = {name:'lyx'};
+            // this.arr.forEach((element,i) => {
+            //   0==i&&(element = 'ywq');
+            //   1==i&&(element.name = 'lyx');
+            // });
+          },3000
         )
+      },
+      methods:{
+        make(){
+          this.arr[0] = 'chengting';
+          console.log(this.arr[0]);
+          this.love = 'dr';
+        }
       }
     })
     </script>

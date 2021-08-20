@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .item {
+            display: inline-block;
+        }
+
+        .i1 {
+            margin-left: 0;
+            ;
+        }
+    </style>
+    <script>
+    switch (this.detail) {
+          case  "01"://已下单
+          case  "03"://已下单
+          case  "06"://已下单
+            Object.assign(iconObj, { placeAnOrder: true });
+            break;
+          case  "02"://等待上门
+            Object.assign(iconObj, { waiting: true });
+            break;
+          case  "04"://已取消
+            Object.assign(iconObj, { cancel: true });
+            break;
+          case  "07"://取件失败
+            Object.assign(iconObj, { pickUpFail: true });
+            break;
+          case  "08"://派送中
+            Object.assign(iconObj, { delivery: true });
+            break;
+          case  "09"://已签收
+            Object.assign(iconObj, { haveToTake: true });
+            break;
+          case  "10"://签收失败
+            Object.assign(iconObj, { signForFail: true });
+            break;
+          case  "20"://运输中
+            Object.assign(iconObj, { transport: true });
+            break;
+    }
+
+    var map={
+        01:"placeAnOrder",
+        03:"placeAnOrder",
+        06:"placeAnOrder",
+        02:"waiting",
+        04:"cancel",
+        07:"pickUpFail",
+        08:"delivery",
+        09:"haveToTake",
+        10:"signForFail",
+        20:"transport",
+    },o={};
+    o[map[this.detail]]=true;
+    Object.assign(iconObj, o);
+
+
+
+    </script>
+</head>
+
+<body>
+    <span class="item i0">123123444444444444444444444444444444444444444444444444444444444444444444444123123444444444444444444444444444444444444444444444444444444444444444444444</span>
+</body>
+
+</html>

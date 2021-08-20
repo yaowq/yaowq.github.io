@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+    .red{
+      color: red;
+    }
+    ul>li{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <input v-model="keyword" type="text" @input="input">
+    <ul id="example-1">
+      <li v-for="item in items" :key="item.message" v-html="item.message">
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="./js/vue.js"></script>
+<script type="text/javascript">
+  var result = {
+    "limit": 100,
+    "keyword": "你",
+    "msgs": [
+      { "scene": "team", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "506d84177c3db45835d16181e2e6e96a", "to": "2845729530", "time": 1611129242563, "type": "text", "text": "你好", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": true, "isLocal": false, "resend": false, "idClient": "bf6d2e77b9ef5d19f2e1e3d53bd8fd56", "userUpdateTime": 1611127969362, "status": "success", "target": "2845729530", "sessionId": "team-2845729530", "flow": "out", "idServer": "190973676009553944" },
+      { "scene": "p2p", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "00003518", "time": 1611125760662, "type": "text", "text": "你胡如若", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": false, "isLocal": false, "resend": false, "idClient": "4b1d758167d15eec144e567ff4284466", "userUpdateTime": 1611124491509, "status": "success", "target": "00003518", "sessionId": "p2p-00003518", "flow": "out", "idServer": "56970154" },
+      { "scene": "p2p", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "00392358", "time": 1611125747944, "type": "text", "text": "柔弱弱你好", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": false, "isLocal": false, "resend": false, "idClient": "d0a3cee91fa2b1c7871bb4cb7477475d", "userUpdateTime": 1611124491509, "status": "success", "target": "00392358", "sessionId": "p2p-00392358", "flow": "out", "idServer": "56970020" },
+      { "scene": "p2p", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "00938756", "time": 1611125741628, "type": "text", "text": "六路覅u让人 你会和", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": false, "isLocal": false, "resend": false, "idClient": "7b11dc8de8a7b468bac2ee62262cf8c8", "userUpdateTime": 1611124491509, "status": "success", "target": "00938756", "sessionId": "p2p-00938756", "flow": "out", "idServer": "56969948" },
+      { "scene": "p2p", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "01371572", "time": 1611125726605, "type": "text", "text": "耶耶耶一幅幅  你你你", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": false, "isLocal": false, "resend": false, "idClient": "bd45d3fdea5a33b3df54975259481a1f", "userUpdateTime": 1611124491509, "status": "success", "target": "01371572", "sessionId": "p2p-01371572", "flow": "out", "idServer": "56969750" },
+      { "scene": "team", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "2845729530", "time": 1611125704754, "type": "text", "text": "的放假放假 你得好好的好的", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": true, "isLocal": false, "resend": false, "idClient": "2d39d9d4bacefe3ab8792f0ce8801f81", "userUpdateTime": 1611124491509, "status": "success", "target": "2845729530", "sessionId": "team-2845729530", "flow": "out", "idServer": "190973676009553941" },
+      { "scene": "p2p", "from": "e8e6739b087a48eb91345d6ef39180a4", "fromNick": "秘密", "fromClientType": "Web", "fromDeviceId": "32607d717df2d0727dce45416f2fa61c", "to": "00201297", "time": 1611125685149, "type": "text", "text": "你好 二u额u额", "isHistoryable": true, "isRoamingable": true, "isSyncable": true, "cc": true, "isPushable": true, "isOfflinable": true, "isUnreadable": true, "isReplyMsg": true, "needPushNick": true, "needMsgReceipt": false, "isLocal": false, "resend": false, "idClient": "f08ce4fa3fd8b40ea58e48c170489fde", "userUpdateTime": 1611124491509, "status": "success", "target": "00201297", "sessionId": "p2p-00201297", "flow": "out", "idServer": "56969330" }
+    ]
+  }
+  var app = new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        keyword: '',
+        result,
+        items:[]
+      }
+    },
+    methods:{
+      input(){
+        if(!this.keyword.trim()){
+          return;
+        }
+        this.items=[];
+        this.result.msgs.forEach(element => {
+          var text=element.text;
+          console.log(text);
+          var index=text.indexOf(this.keyword);
+          if(index>=0){
+            var radius=6;
+            text=text.substr(index>=radius?(index-radius):0);
+            if(index>radius){
+              text='...'+text;
+            }
+            var message=text.replace(new RegExp(`(${this.keyword})`,'g'),'<span class="red">$1</span>');
+            this.items.push({message:message});
+          }
+        });
+      }
+    },
+    created() {
+    }
+  })
+</script>
+
+</html>

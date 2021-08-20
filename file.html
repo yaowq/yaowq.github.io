@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片预览</title>
+    <style>
+        img{
+            margin: 10px;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+    <script>
+        function renderImgs(files){
+            files = [].slice.call(files);
+            files.forEach(file => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload=function(){
+                    let img = new Image();
+                    img.src = fileReader.result;
+                    // document.querySelector('#preview').appendChild(img);
+                    preview.appendChild(img);
+                }
+                fileReader.onprogress=function(e){
+                    progress.innerText = Math.round(e.loaded/e.total*100)+'%';
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <button type="submit" id="btn">选择图片</button> <sub>_按钮为示例，可以改成自己的展示效果(隐藏原生交互界面，隐式调用原生功能)</sub>
+    <input type="file" id="files"  multiple class="hide">
+    <div id="progress"></div>
+    <div id="preview"></div>
+    <script>
+        btn.addEventListener('click',e=>{
+            files.click();
+        });
+        files.addEventListener('change',e=>{
+            console.log(e.target.files);
+            renderImgs(e.target.files);
+        });
+    </script>
+</body>
+</html>

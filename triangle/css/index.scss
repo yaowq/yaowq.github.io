@@ -1,0 +1,11 @@
+$arr:top,right,bottom,left;
+@for $i from 1 through 4 {
+  .triangle-#{nth($arr,$i)} { 
+    width: 0;
+    height: 0;
+    border: 50px solid transparent;
+    border-top: 0;
+    border-bottom: 60px solid blue;
+    transform: rotate($i*90deg-90deg);
+  }
+}

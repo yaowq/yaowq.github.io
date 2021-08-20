@@ -79,6 +79,9 @@ const clone = parent => {
       return child;
     };
     return _clone(parent);
-  };
-  
+};
+const sleep = time => {
+  for (let index = 0; index < 1000000000*time; index++) {
+  }
+}  
   
