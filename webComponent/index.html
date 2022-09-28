@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./MyButton.js"></script>
+</head>
+<body>
+  <my-button> 
+    <p slot="my-text">Another text from outside</p>
+  </my-button>
+</body>
+<script>
+  const mybutton = document.querySelector('my-button');
+  mybutton.addEventListener('onClick', (value) => {
+    console.log(value)
+    mybutton.text = value.detail
+  });
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型、原型链</title>
+</head>
+
+<body>
+    <script>
+        function Person(name){
+		this.name = name
+	}
+	Person.prototype.sayHello = function(){
+		console.log('sayHello')
+	}
+    Person.prototype.count = 0;
+	let p1 = new Person('lx');
+    p1.__proto__.count = 1;
+	let p2 = new Person();
+	console.log(p1,p1.count)
+	console.log(p2.count)
+    </script>
+</body>
+
+</html>

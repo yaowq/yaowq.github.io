@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>格式化文字转图标</title>
+    <style>
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <script>
+        // var face = {
+        //     '[哈哈]': '<img src="images/face/haha.gif" alt="" />',
+        //     '[流汗]': '<img src="images/face/liuhan.gif" alt="" />'
+        // }
+
+        // var reg = /\[.+?\]/g;
+
+        // var str = '[哈哈]abc[流汗][流汗]'; 
+        // console.log(str);
+        // str = str.replace(reg, function (a, b) {
+        //     console.log(arguments);
+
+        //     return face[a];
+
+        // });
+        // console.log(str);
+
+        var lengthOfLongestSubstring = function (s) {
+            var i = 0;
+            var j = 1;
+            maxLength = 0;
+            while (j < s.length) {
+                var sub = s.slice(i, j);
+                console.log(sub, s[j]);
+                var index = sub.indexOf(s[j]);
+                index >= 0?i++:j++;
+                maxLength = Math.max(maxLength, sub.length);
+            }
+            return maxLength;
+        };
+        lengthOfLongestSubstring("abcabcbb");
+    </script>
+</body>
+
+</html>

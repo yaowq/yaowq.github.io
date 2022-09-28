@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base64 img 获取宽、高、大小</title>
+</head>
+
+<body>
+    <script>
+        function getImgSize(base64) {
+            //把头部去掉
+            let str = base64.split('base64,')[1];
+            // 找到等号，把等号也去掉
+            let equalIndex = str.indexOf('=');
+            if (str.indexOf('=') > 0) {
+                str = str.substring(0, equalIndex);
+            }
+            // 原来的字符流大小，单位为字节
+            let strLength = str.length;
+            // 计算后得到的文件流大小，单位为字节
+            let fileLength = parseInt(strLength - (strLength / 8) * 2);
+            // 由字节转换为kb
+            let size = "";
+            size = (fileLength / 1024).toFixed(2);
+            let sizeStr = size + ""; //转成字符串
+            let index = sizeStr.indexOf("."); //获取小数点处的索引
+            let dou = sizeStr.substr(index + 1, 2) //获取小数点后两位的值
+            if (dou == "00") { //判断后两位是否为00，如果是则删除00                
+                return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
+            }
+            return size;
+        }
+        function getImgInfo(base64s) {
+            const arr = base64s.map(base64 =>
+                new Promise((resolve, reject) => {
+                    let img = new Image();
+                    img.onload = function () {
+                        const { width, height } = img;
+                        resolve({
+                            width,
+                            height,
+                            fileSize: getImgSize(base64)
+                        });
+                    }
+                    img.onerror = function () {
+                        reject(new Error('error'));
+                    }
+                    img.src = base64;
+                })
+            );
+            return Promise.all(arr);
+        }
+
+        async function main() {
+            let base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFQSURBVHgB7dlBSsNQEAbgfxKh7sQb1BvYG+gFJO7EjXYnbjyC9QbujCtxo1lq9QC5ifEEusumfWNGjSA0SSHhTWjng8AEpo/8Je81rwGMWW+EDkRHZ8MZMJT6NYlTeNQ6gFy8I3orz5lc9PJw+wxPArRUfvN/HG3Do9YBtFkAbRZAmwXQtgFP5AePEVxKzcTp9PHmHh3wFsABExCf/J6eFkcnAWwOaLMA2lZ7GZWlbw7sSR0C6VMSZ+iZ2gBz0B3RTwDHLJuUCD2z9C3EhC30kE1ibd4eJZZ1cHx+QQ67UhPcVdPC0bsAYL7m8r8S/r5BxnXtNge0WQBtFkCbBdBmAbRZAG0WQFt9AMInGhTP49n/EfmjojWrqCv7GO4dDWoDhPlgXGzm9+UI883DRT2y4QiYd6QnoNmo6g3lNIkn5VhBPhhVXlDZU4wln4ExptYX6V9l8F00/skAAAAASUVORK5CYII=';
+            const imgs = await getImgInfo([base64, base64]);
+            console.log(imgs);
+        }
+
+        main();
+    </script>
+    <script>
+        const node2obj = async (node) => {
+            if (node.nodeType == 3) return { text: node.data, style: { font: "m" } };
+            else if (node.tagName == "BR") return { text: "" };
+            else if (node.tagName == "IMG") {
+                let imgSize
+                await getImageSize(node.src).then(size => {
+                    imgSize = size;
+                })
+                return {
+                    img: node.src,
+                    size: `${imgSize.width},${imgSize.height}`
+                }
+            } else {
+                const style = {};
+                if (node.className) style.font = class2code[node.className];
+                if (node.tagName == "STRONG") style.blod = "1";
+                if (node.style.color) {
+                    style.color = node.style.color.replace(/rgb\(|\)|\s/g, "") + ",1";
+                }
+                return { text: node.innerText, style };
+            }
+        };
+    </script>
+</body>
+
+</html>
