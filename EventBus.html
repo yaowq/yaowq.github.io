@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// class EventBus {
+		// 	constructor() {
+		// 		this.event = {}  // 'run': [fun]
+		// 	}
+		// 	on(type, cb) {
+		// 		if (!this.event[type]) {
+		// 		this.event[type] = [cb]
+		// 		} else {
+		// 		this.event[type].push(cb)
+		// 		}
+		// 	}
+		// 	once(type, cb) {
+		// 		const fn = (...args) => {
+		// 		cb(...args)
+		// 		this.off(type, fn)
+		// 		}
+		// 		this.on(type, fn)
+		// 	}
+		// 	emit(type, ...args) {
+		// 		if (!this.event[type]) {
+		// 		return
+		// 		} else {
+		// 		this.event[type].forEach(cb => {
+		// 			cb(...args) 
+		// 		});
+		// 		}
+		// 	}
+		// 	off(type, cb) {
+		// 		if (!this.event[type]) {
+		// 		return
+		// 		} else {
+		// 		this.event[type] = this.event[type].filter(item => item !== cb);
+		// 		}
+		// 	}
+		// }
+		
+		function EventBus() {
+			const event = {}
+			return {
+				on(type, cb) {
+					if(event[type]){
+						event[type].push(cb)
+					}else{
+						event[type] = [cb]
+					}
+				},
+				emit (type, params) {
+					if(event[type]){
+						event[type].forEach(cb => {
+							cb(params)
+						});
+					}
+				},
+				off(type, cb) {
+					if (!event[type]) {
+						return
+					} else {
+						event[type] = event[type].filter(item => item !== cb);
+					}
+				},
+				once(type, cb) {
+					const fn = (...args) => {
+						cb(...args)
+						this.off(type, fn)
+					}
+					this.on(type, fn)
+				}
+			}
+		}
+
+		const myEvent = EventBus()
+		const studentRemoveCb = (student)=>{
+			document.writeln(student.name + '<br>')
+			console.log(`删除学生：${student.name}`)
+		}
+		myEvent.on("studentRemove", studentRemoveCb)
+		setInterval(() => {
+			myEvent.emit("studentRemove", {name: 'ywq'})
+		}, 1000);
+		setTimeout(() => {
+			myEvent.off("studentRemove", studentRemoveCb)
+		}, 5000);
+	</script>
+</body>
+</html>
